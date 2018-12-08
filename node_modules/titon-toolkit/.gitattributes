@@ -1,7 +1,0 @@
-# Always use LF
-* text eol=lf
-
-# Binary files
-*.png binary
-*.jpg binary
-*.zip binary

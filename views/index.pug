@@ -4,75 +4,44 @@ block body-scripts
   script(src="/js/index.js")
   
 block body-content
-  div(class="tabs", data-tab)
-    nav(class="tab-nav", data-tab-nav)
-      ul
-        li
-          a(href="#otglite")
-            button(class="button large") OTG Lite TXT
-          | &nbsp;&nbsp;
-        li
-          a(href="#otglite-db")
-            button(class="button large") OTG Lite DB
-          | &nbsp;&nbsp;
-    section(class="tab-section", data-tab-section) 
-      table
-        tr
-          td(colspan=2, height=50)
-            b Welcome to OTGLite 
-              span(style="color: blue;") (TXT file version)
-        tr
-          td(colspan=2, height=50)
-            | This is a Crawler for 
-            b http://www.xiaoshuo240.cn/
-            | . It fetches data from the target website then save to txt files.
-        tr
-          td(height=50)
-            | Start Page:&nbsp;&nbsp;
-            input(type="text", id="txtOtg", value="http://www.xiaoshuo240.cn/book/1003/860406.html", style="width:600px")
-          td
-            | &nbsp;&nbsp;Fetch&nbsp;
-            select(id="maxPages")
-              option(value="1") 1
-              option(value="5" selected) 5
-              option(value="10") 10
-              option(value="20") 20
-              option(value="30") 30
-              option(value="50") 50
-              option(value="100") 100
-            | &nbsp;Pages&nbsp;&nbsp;&nbsp;
-            button(id="btnOtg", style="cursor: pointer; width: 250px; height: 30px; color: blue") Grabee TXT Go!
-        tr
-          td(colspan=2)
-            textarea.response(id="taOtgRes", cols="30", rows="20", style="width: 100%", readonly)
-
-    section(class="tab-section", data-tab-section)
-      table
-        tr
-          td(colspan=2, height=50)
-            b Welcome to OTGLite 
-              span(style="color: red;") (DB version)
-        tr
-          td(colspan=2, height=50)
-            | This is a Crawler for 
-            b http://www.xiaoshuo240.cn/
-            | . It fetches data from the target website then save to database.
-        tr
-          td(height=50)
-            | Start Page:&nbsp;&nbsp;
-            input(type="text", id="txtOtgDB", value="http://www.xiaoshuo240.cn/book/1003/860406.html", style="width:600px")
-          td
-            | &nbsp;&nbsp;Fetch&nbsp;
-            select(id="maxPagesDB")
-              option(value="1") 1
-              option(value="5" selected) 5
-              option(value="10") 10
-              option(value="20") 20
-              option(value="30") 30
-              option(value="50") 50
-              option(value="100") 100
-            | &nbsp;Pages&nbsp;&nbsp;&nbsp;
-            button(id="btnOtgDB", style="cursor: pointer; width: 250px; height: 30px; color: red") Grabee DB Go!
-        tr
-          td(colspan=2)
-            textarea.response(id="taOtgDBRes", cols="30", rows="20", style="width: 100%", readonly)
+  center
+    table(width="80%")
+      tr
+        td(colspan="2", height="50", align="center")
+          b Welcome to Page Crawler : OTGLite (TXT/DB Edition) 
+      tr
+        td(width="170", height="30", align="right")
+          | Applicable site : 
+        td
+          | www.xiaoshuo240.cn
+      tr
+        td(height="30", align="right")
+          | Save format : 
+        td
+          | txt files / sqlite db
+      tr
+        td(height="40", align="right")
+          | Start Page :
+        td
+          input(type="text", id="txtOtg", value="http://www.xiaoshuo240.cn/book/1003/860406.html", style="width:100%")
+      tr
+        td(colspan="2", height="40", align="right")
+          | &nbsp;&nbsp;Fetch&nbsp;
+          select(id="maxPages")
+            option(value="1" selected) 1
+            option(value="5") 5
+            option(value="10") 10
+            option(value="20") 20
+            option(value="30") 30
+            option(value="50") 50
+            option(value="100") 100
+          | &nbsp;Pages&nbsp;&nbsp;&nbsp;
+          | Save to &nbsp;
+          select(id="opSaveTo")
+            option(value="db") SQLite DB
+            option(value="txt") TXT file
+          | &nbsp;&nbsp;&nbsp;
+          button.go(id="btnOtg") Grabee Go!
+      tr
+        td(colspan="2")
+          textarea.response(id="taOtgRes", cols="30", rows="20", style="width: 100%", readonly)

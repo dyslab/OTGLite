@@ -4,7 +4,8 @@ body {
   border: 0;
   outline: 0;
   font-family: Geneva, Verdana, sans-serif;
-  font-size: 16pt;
+  font-size: 18px;
+  line-height: 24px;
   vertical-align: baseline;
   background: #FAF4B1;
   background-image: url(/img/texture.png);
@@ -19,12 +20,17 @@ div, dl, dt, dd
   vertical-align: baseline;
 }
 
+input, select {
+  font-size: 18px;
+  line-height: 22px;
+}
+
 textarea.response {
   border: 1px;
   border-style : solid;
   background-color: #FFF;
   color: #000;
-  font-size : 12pt;
+  font-size : 18px;
   font-family : 'Courier New', Courier, monospace;
 }
 
@@ -32,4 +38,18 @@ a {
   color: #493997;
   text-decoration:none;
   text-shadow:1px 1px 1px rgb(172, 172, 172);
+}
+
+button.go {
+  font-size: 18px;
+  line-height: 20px;
+  width: 200px;
+  height: 30px;
+  cursor: pointer;
+  color: black;
+  background-color: lightgray;
+}
+button.go:hover {
+  color: white;
+  background-color: rgb(126, 175, 221);
 }

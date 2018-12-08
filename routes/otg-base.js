@@ -6,15 +6,15 @@ const fetch = require('node-fetch');
 // if succeed, call cb()
 // else        call errcb()
 exports.GetHtmlCode = function(link, cb, errcb) {
-    fetch(link)
-    .then(fetch_res =>  fetch_res.textConverted())
-    .then(body => {
-      if (typeof cb === 'function') {
-        cb(body);
-      }  
-    }).catch(err => { 
-        errcb(err);
-    });
+  fetch(link)
+  .then(fetch_res =>  fetch_res.textConverted())
+  .then(body => {
+    if (typeof cb === 'function') {
+      cb(body);
+    }  
+  }).catch(err => { 
+      errcb(err);
+  });
 }
 
 // Get Children from node object by tagname.
@@ -54,7 +54,7 @@ exports.getContentText = function(obj) {
   return retText;
 }
 
-// Get Digital filename from 'link' 
+// Get Digital filename ID from 'link' 
 function getD(link) {
   var tmpLinkArr = link.split(/\//);
   if (tmpLinkArr.length>0) {
@@ -64,6 +64,16 @@ function getD(link) {
     }
   } 
   return 0;
+}
+
+// Get filename ID from 'link' 
+exports.getFileID = function(link) {
+  return getD(link);
+}
+
+// Get filename from the string 'link'.
+exports.getTXTFilename = function(link) {
+  return getD(link) + '.txt';
 }
 
 // Get attribute 'a:href' from node object. 
@@ -81,11 +91,6 @@ exports.getNextByTagA = function(link, obj) {
       }
     }
   }
-}
-
-// Get filename from the string 'link'.
-exports.getTXTFilename = function(link) {
-  return getD(link) + '.txt';
 }
 
 // Save to the txt file.
