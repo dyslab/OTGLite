@@ -1,0 +1,19 @@
+{
+  "name": "otglite",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "start": "node ./bin/www"
+  },
+  "dependencies": {
+    "cookie-parser": "~1.4.3",
+    "debug": "~2.6.9",
+    "encoding": "^0.1.12",
+    "express": "~4.16.0",
+    "htmlparser2": "^3.10.0",
+    "http-errors": "~1.6.2",
+    "morgan": "~1.9.0",
+    "node-fetch": "^2.3.0",
+    "pug": "2.0.0-beta11"
+  }
+}
