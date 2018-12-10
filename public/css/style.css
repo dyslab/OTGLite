@@ -37,7 +37,10 @@ textarea.response {
 a {
   color: #493997;
   text-decoration:none;
-  text-shadow:1px 1px 1px rgb(172, 172, 172);
+  text-shadow:1px 1px 1px rgb(98, 177, 252);
+}
+a:hover {
+  color: #dd6853;
 }
 
 button.go {
@@ -47,7 +50,7 @@ button.go {
   height: 30px;
   cursor: pointer;
   color: black;
-  background-color: lightgray;
+  background-color: rgb(190, 224, 255);
 }
 button.go:hover {
   color: white;

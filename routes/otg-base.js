@@ -2,6 +2,7 @@ var domutils = require('domutils');
 var fs = require('fs');
 const fetch = require('node-fetch');
 
+// -----------------------------------------------------------------------------
 // Get HTML code from 'link' by node-fetch
 // if succeed, call cb()
 // else        call errcb()
@@ -17,6 +18,8 @@ exports.GetHtmlCode = function(link, cb, errcb) {
   });
 }
 
+// -----------------------------------------------------------------------------
+// DOM node object handler
 // Get Children from node object by tagname.
 exports.getChildObjectByTag = function(obj, tagname) {
   for (var i=0; i<obj.length; i++)
@@ -54,6 +57,25 @@ exports.getContentText = function(obj) {
   return retText;
 }
 
+// Get attribute 'a:href' from node object. 
+exports.getNextByTagA = function(link, obj) {
+  var nNext, retLink;
+  var nThis = getD(link);
+  
+  for (var i=0; i<obj.length; i++) {
+    if (obj[i].type === 'tag' && obj[i].name === 'a') {
+      retLink = domutils.getAttributeValue(obj[i],'href');
+      nNext = getD(retLink);
+      if (nNext>nThis) {
+        // console.log('Next Chapters Link Return Value ===>>>' + retLink);
+        return retLink;
+      }
+    }
+  }
+}
+
+// -----------------------------------------------------------------------------
+// link string handler for website id: 240
 // Get Digital filename ID from 'link' 
 function getD(link) {
   var tmpLinkArr = link.split(/\//);
@@ -66,33 +88,35 @@ function getD(link) {
   return 0;
 }
 
+// link string handler for website id: 240
+// Get bookfolder ID from 'link' 
+function getB(link) {
+  var tmpLinkArr = link.split(/\//);
+  if (tmpLinkArr.length>1) {
+    var tmpF = tmpLinkArr[tmpLinkArr.length-2];
+    if(tmpF !== undefined) return tmpF;
+  } 
+  return 0;
+}
+
 // Get filename ID from 'link' 
 exports.getFileID = function(link) {
   return getD(link);
 }
 
-// Get filename from the string 'link'.
+// link string handler for website id: 240
+// Get bookfolder ID from 'link' 
+exports.getBookID = function(link) {
+  return getB(link);
+}
+
+// Get txt filename from the string 'link'.
 exports.getTXTFilename = function(link) {
-  return getD(link) + '.txt';
+  return getB(link) + '-' + getD(link) + '.txt';
 }
 
-// Get attribute 'a:href' from node object. 
-exports.getNextByTagA = function(link, obj) {
-  var nNext, retLink;
-  var nThis = getD(link);
-  
-  for (var i=0; i<obj.length; i++) {
-    if (obj[i].type === 'tag' && obj[i].name === 'a') {
-      retLink = domutils.getAttributeValue(obj[i],'href');
-      nNext = getD(retLink);
-      if (nNext>nThis) {
-        // console.log('Next Chapters Link Return Value ================>>>>>' + retLink);
-        return retLink;
-      }
-    }
-  }
-}
-
+// -----------------------------------------------------------------------------
+// TXT file handler
 // Save to the txt file.
 exports.saveTXTfile = function(filename, chunk) {
   var retFlag = false;
@@ -102,3 +126,7 @@ exports.saveTXTfile = function(filename, chunk) {
 
   if(retFlag) return filename;
 }
+
+// -----------------------------------------------------------------------------
+// SQLite DB handler
+const baseDBfullpath = './public/sqlitedb/otglite.db';  // SQLite3 Database file
