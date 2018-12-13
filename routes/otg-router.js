@@ -1,8 +1,7 @@
 var express = require('express');
-var htmlparser = require('htmlparser2');
-var otgbase = require('./otg-base')
 var router = express.Router();
-const baseTXTpath = './public/txt/';
+var htmlparser = require('htmlparser2');
+var otgbase = require('./otg-base');
 
 // Use htmlparser2 to parse HTML code of "htmlcode" which get from website ID:240.
 function parseHtml_240(link, htmlcode, saveto) {
@@ -39,7 +38,7 @@ function parseHtml_240(link, htmlcode, saveto) {
       var fname;
       if (saveto === 'txt') {
         // save to TXT file.
-        fname = otgbase.saveTXTfile(baseTXTpath + otgbase.getTXTFilename(link), txtContent);
+        fname = otgbase.savetoTXTfile(otgbase.getTXTFilename(link), txtContent);
       } else {
         // save to DB.
         fname = otgbase.getBookID(link) + '/' + otgbase.getFileID(link);

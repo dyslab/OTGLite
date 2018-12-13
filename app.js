@@ -6,6 +6,8 @@ var logger = require('morgan');
 
 var indexRouter = require('./routes/index-router');
 var otgRouter = require('./routes/otg-router');
+var txtRouter = require('./routes/otg-txt-handler');
+var dbRouter = require('./routes/otg-db-handler');
 
 var app = express();
 
@@ -24,6 +26,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/otg', otgRouter);
+app.use('/txt', txtRouter);
+app.use('/db', dbRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

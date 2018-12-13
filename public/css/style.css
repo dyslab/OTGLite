@@ -56,3 +56,27 @@ button.go:hover {
   color: white;
   background-color: rgb(126, 175, 221);
 }
+
+button.exp, button.rm {
+  font-size: 18px;
+  line-height: 20px;
+  width: 240px;
+  height: 30px;
+  cursor: pointer;
+  color: black;
+  border-left-color: rgb(231, 255, 211); 
+  border-top-color: rgb(231, 255, 211); 
+  border-right-color: rgb(231, 255, 211); 
+  border-bottom-color: rgb(231, 255, 211); 
+  background-color: rgb(189, 240, 147);
+}
+button.rm {
+  color: rgb(255, 0, 0);
+}
+button.exp:hover, button.rm:hover {
+  color: white;
+  background-color: rgb(83, 143, 75);
+}
+button.rm:hover {
+  color: yellow;
+}

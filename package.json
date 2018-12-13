@@ -6,6 +6,7 @@
     "start": "node ./bin/www"
   },
   "dependencies": {
+    "collections": "^5.1.5",
     "cookie-parser": "~1.4.3",
     "debug": "~2.6.9",
     "encoding": "^0.1.12",

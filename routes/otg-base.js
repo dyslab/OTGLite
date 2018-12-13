@@ -1,6 +1,8 @@
 var domutils = require('domutils');
 var fs = require('fs');
+var SortedArray = require("collections/sorted-array");
 const fetch = require('node-fetch');
+const baseTXTpath = './public/txt/';
 
 // -----------------------------------------------------------------------------
 // Get HTML code from 'link' by node-fetch
@@ -112,13 +114,13 @@ exports.getBookID = function(link) {
 
 // Get txt filename from the string 'link'.
 exports.getTXTFilename = function(link) {
-  return getB(link) + '-' + getD(link) + '.txt';
+  return baseTXTpath + getB(link) + '-' + getD(link) + '.txt';
 }
 
 // -----------------------------------------------------------------------------
 // TXT file handler
 // Save to the txt file.
-exports.saveTXTfile = function(filename, chunk) {
+exports.savetoTXTfile = function(filename, chunk) {
   var retFlag = false;
   const w_stream = fs.createWriteStream(filename);
   if (w_stream.write(chunk) !== false) retFlag = true;
@@ -127,6 +129,59 @@ exports.saveTXTfile = function(filename, chunk) {
   if(retFlag) return filename;
 }
 
+// Get files amount of baseTXTpath.
+exports.getFileCount = function() {
+  var dirfiles = fs.readdirSync(baseTXTpath);
+  
+  if (dirfiles && dirfiles !== 'undefined') {
+    return dirfiles.length;
+  }
+  else return 0;
+}
+
+// Export to a single txt file.
+exports.exportTXTfile = function() {
+  var dirfiles = fs.readdirSync(baseTXTpath);
+  var file_buffer = '';
+  var tmpdata;
+
+  if (dirfiles && dirfiles !== 'undefined') {
+    // get sorted filenames.
+    var sortedfilenames = new SortedArray(dirfiles);
+
+    // export all files to buffer. using file synchronous method.
+    sortedfilenames.forEach( (filepath) => {
+      // check file type.
+      if (filepath.search(/.txt/i) > 0) {
+        tmpdata = fs.readFileSync(baseTXTpath + filepath, { encoding: 'utf8' });
+        if (tmpdata) 
+          file_buffer += tmpdata + '\r\n\r\n\r\n';
+      }
+    });
+
+    return file_buffer;
+  }
+}
+
+// Remove all txt file in the directory "baseTXTpath".
+exports.removeAllFiles = function() {
+  var dirfiles = fs.readdirSync(baseTXTpath);
+  var removeCount = 0;
+
+  if (dirfiles && dirfiles !== 'undefined') {
+    for (var i=0; i<dirfiles.length; i++) {
+      // remove/unlink all files to buffer. using file synchronous method.
+      fs.unlink(baseTXTpath + dirfiles[i], (err) => {
+        if (err) console.log(err);
+      });
+    }
+
+    return removeCount;
+  }
+}
+
 // -----------------------------------------------------------------------------
 // SQLite DB handler
 const baseDBfullpath = './public/sqlitedb/otglite.db';  // SQLite3 Database file
+
+
