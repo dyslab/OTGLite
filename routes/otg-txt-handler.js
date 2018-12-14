@@ -9,7 +9,7 @@ router.get('/', function(req, res, next) {
 
 /* GET txt export action. */
 router.get('/export', function(req, res, next) {
-  res.attachment('123.txt');
+  res.attachment('otg-export-' + Date.now() + '.txt');
   res.send(otgbase.exportTXTfile());
 });
 
