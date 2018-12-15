@@ -57,11 +57,11 @@ button.go:hover {
   background-color: rgb(126, 175, 221);
 }
 
-button.exp, button.rm {
+button.exp, button.rm, button.dbcrt, button.dbexp, button.dbrm {
   font-size: 18px;
   line-height: 20px;
-  width: 240px;
-  height: 30px;
+  width: 260px;
+  height: 36px;
   cursor: pointer;
   color: black;
   border-left-color: rgb(231, 255, 211); 
@@ -70,13 +70,17 @@ button.exp, button.rm {
   border-bottom-color: rgb(231, 255, 211); 
   background-color: rgb(189, 240, 147);
 }
-button.rm {
+button.rm, button.dbrm {
   color: rgb(255, 0, 0);
 }
-button.exp:hover, button.rm:hover {
+button.dbexp, button.dbrm {
+  width: 300px;
+}
+button.exp:hover, button.rm:hover, button.dbcrt:hover, button.dbexp:hover {
   color: white;
   background-color: rgb(83, 143, 75);
 }
-button.rm:hover {
+button.rm:hover, button.dbrm:hover {
   color: yellow;
+  background-color: rgb(83, 143, 75);
 }
