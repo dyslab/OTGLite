@@ -11,18 +11,12 @@ block body-content
           b Welcome to Page Crawler : OTGLite DB Management Page
       tr
         td(height="80")
-          if !dbok
-            div(id="db_false")
-              span Note: DB file not found.
-              | &nbsp;&nbsp;&nbsp;&nbsp;
-              button.dbcrt(id="btnCreate") Create DB file and tables
-          else
-            div(id="db_true")
-              span Total <b>#{dbcount}</b> fetched record(s) found.
-              | &nbsp;&nbsp;&nbsp;&nbsp;
-              button.dbexp(id="btnExport") Export text file by Book ID
-              | &nbsp;&nbsp;&nbsp;&nbsp;
-              button.dbrm(id="btnRemove") Remove records by Book ID
+          div(id="db_true")
+            span Total <b>#{dbcount}</b> fetched record(s) found.
+            | &nbsp;&nbsp;&nbsp;&nbsp;
+            button.dbexp(id="btnExport") Export text file by Book ID
+            | &nbsp;&nbsp;&nbsp;&nbsp;
+            button.dbrm(id="btnRemove") Remove records by Book ID
       tr
         td(align="right")
           | &nbsp;&nbsp;&nbsp;•&nbsp;&nbsp;&nbsp;
