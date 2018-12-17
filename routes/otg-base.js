@@ -194,7 +194,7 @@ exports.savetoDB = function (bookid, pageid, chunk) {
     changecount = insertinfo.changes
   } catch (err) {
     // console.log(err)
-    // If the records existed due to the unique conflict, hand over to the update method.
+    // If the records existed due to the unique conflict, hand over to update method.
     const updatedb = db.prepare('UPDATE otgdata SET text=?, updatetime=CURRENT_TIMESTAMP WHERE bookid=? AND pageid=?')
     const updateinfo = updatedb.run(chunk, bookid, pageid)
     changecount = updateinfo.changes
@@ -206,9 +206,13 @@ exports.savetoDB = function (bookid, pageid, chunk) {
 exports.checkoutDatabase = function () {
   const db = new Database(baseDBfullpath)
   var ret = 0
+  var retData
   try {
-    const rd = db.prepare('SELECT COUNT(bookid) AS count FROM otgdata')
-    ret = rd.get().count
+    const rd1 = db.prepare('SELECT COUNT(bookid) AS count FROM otgdata')
+    ret = rd1.get().count
+    const rd2 = db.prepare('SELECT DISTINCT bookid, COUNT(pageid) as pages FROM otgdata GROUP BY bookid ORDER BY updatetime DESC')
+    retData = rd2.all()
+    // console.log(retData)
   } catch (err) {
     db.close()
     fs.unlinkSync(baseDBfullpath)
@@ -219,5 +223,35 @@ exports.checkoutDatabase = function () {
     stmt.run()
     newdb.close()
   }
-  return ret
+  return { recordcount: ret, bookdata: retData }
+}
+
+// Export to a single txt file from database by 'bookid'
+exports.exportTXTfileFromDB = function (bookid) {
+  const db = new Database(baseDBfullpath)
+  var filebuffer = ''
+
+  try {
+    const rd = db.prepare('SELECT text FROM otgdata WHERE bookid=? ORDER BY pageid ASC')
+    const tmpdata = rd.all(bookid)
+    tmpdata.forEach(element => {
+      filebuffer += element.text + '\r\n\r\n\r\n'
+    })
+  } catch (err) {
+    console.log(err)
+  }
+
+  return filebuffer
+}
+
+// Remove records from database by 'bookid'
+exports.removeRecordFromDB = function (bookid) {
+  const db = new Database(baseDBfullpath)
+
+  try {
+    const rd = db.prepare('DELETE FROM otgdata WHERE bookid=?')
+    rd.run(bookid)
+  } catch (err) {
+    console.log(err)
+  }
 }

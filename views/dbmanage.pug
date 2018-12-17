@@ -10,13 +10,32 @@ block body-content
         td(height="50", align="center")
           b Welcome to Page Crawler : OTGLite DB Management Page
       tr
-        td(height="80")
-          div(id="db_true")
-            span Total <b>#{dbcount}</b> fetched record(s) found.
-            | &nbsp;&nbsp;&nbsp;&nbsp;
-            button.dbexp(id="btnExport") Export text file by Book ID
-            | &nbsp;&nbsp;&nbsp;&nbsp;
-            button.dbrm(id="btnRemove") Remove records by Book ID
+        td(height="50")
+          span Total <b>#{recordcount}</b> fetched record(s) found.
+      tr
+        td(height="50")
+          table.bls(id="tbBook")
+            tr.trb-title
+              td.bls(width="30") 
+              td.bls(width="60", align="center") NO
+              td.bls(width="400") Book ID.
+              td.bls(width="100", align="right") Pages
+            if bookdata
+              each bdata, index in bookdata
+                tr.trb(id="trBook")
+                  td.bls 
+                    if index == 0 
+                      input(type="radio", name="bookid", value=bdata.bookid, checked)
+                    else
+                      input(type="radio", name="bookid", value=bdata.bookid)
+                  td.bls(align="center") #{index+1}
+                  td.bls #{bdata.bookid}
+                  td.bls(align="right") #{bdata.pages}
+      tr
+        td(height="50")
+          button.dbexp(id="btnExport") Export text file by Book ID
+          | &nbsp;&nbsp;&nbsp;&nbsp;
+          button.dbrm(id="btnRemove") Remove records by Book ID
       tr
         td(align="right")
           | &nbsp;&nbsp;&nbsp;•&nbsp;&nbsp;&nbsp;
