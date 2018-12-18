@@ -34,12 +34,17 @@ textarea.response {
   font-family : 'Courier New', Courier, monospace;
 }
 
+a.sample {
+  color: rgb(100, 100, 100);
+  text-decoration:none;
+  text-shadow:1px 1px 1px #FFF;
+}
 a {
   color: #493997;
   text-decoration:none;
   text-shadow:1px 1px 1px rgb(98, 177, 252);
 }
-a:hover {
+a.sample：hover, a:hover {
   color: #dd6853;
 }
 
@@ -85,9 +90,14 @@ button.rm:hover, button.dbrm:hover {
   background-color: rgb(83, 143, 75);
 }
 
+table, td, tbody {
+  margin: 0px;
+  padding: 0px;
+}
+
 table.bls, td.bls {
   margin: 0px;
-  padding: 3px;
+  padding: 2px;
   border-collapse: collapse;
   border: 1px solid black;
 }
@@ -101,4 +111,8 @@ tr.trb {
 tr.trb:hover {
   cursor: pointer;
   background: #FAE4A1
+}
+
+.fs90 {
+  font-size: 90%;
 }

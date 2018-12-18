@@ -10,10 +10,20 @@ block body-content
         td(colspan="2", height="50", align="center")
           b Welcome to Page Crawler : OTGLite (TXT/DB Edition) 
       tr
-        td(width="170", height="30", align="right")
+        td(width="170", height="30", align="right", valign="top")
           | Applicable site : 
         td
-          | www.xiaoshuo240.cn
+          table
+            tr
+              td(width="225") 
+                a.sample(href="http://www.xiaoshuo240.cn", target="_blank") www.xiaoshuo240.cn
+              td.fs90 example link: 
+                a.sample(href="http://www.xiaoshuo240.cn/book/1003/860406.html", target="_blank") http://www.xiaoshuo240.cn/book/1003/860406.html
+            tr
+              td
+                a.sample(href="http://www.qingyunian.net", target="_blank") www.qingyunian.net
+              td.fs90 example link: 
+                a.sample(href="http://www.qingyunian.net/54.html", target="_blank") http://www.qingyunian.net/54.html
       tr
         td(height="30", align="right")
           | Save format : 
@@ -22,8 +32,8 @@ block body-content
       tr
         td(height="40", align="right")
           | Start Page :
-        td
-          input(type="text", id="txtOtg", value="http://www.xiaoshuo240.cn/book/1003/860406.html", style="width:100%")
+        td(align="right")
+          input(type="text", id="txtOtg", value="http://www.qingyunian.net/54.html", style="width:98%")
       tr
         td(colspan="2", height="40", align="right")
           | &nbsp;&nbsp;Fetch&nbsp;
@@ -43,8 +53,8 @@ block body-content
           | &nbsp;&nbsp;&nbsp;
           button.go(id="btnOtg") Grabee Go!
       tr
-        td(colspan="2")
-          textarea.response(id="taOtgRes", cols="30", rows="20", style="width: 100%", readonly)
+        td(colspan="2", align="right")
+          textarea.response(id="taOtgRes", cols="30", rows="20", style="width: 98%", readonly)
       tr
         td(colspan="2", align="right")
           | &nbsp;&nbsp;&nbsp;•&nbsp;&nbsp;&nbsp;

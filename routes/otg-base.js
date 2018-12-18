@@ -56,7 +56,7 @@ exports.getContentText = function (obj) {
   var retText = ''
   for (var i = 0; i < obj.length; i++) {
     if (obj[i].type === 'tag' && obj[i].name === 'br') {
-      retText = retText + '\r\n'
+      retText = retText + '\n'
     }
     if (obj[i].type === 'text') {
       retText = retText + obj[i].data.replace(/&nbsp;/g, ' ')
@@ -64,6 +64,34 @@ exports.getContentText = function (obj) {
   }
 
   return retText
+}
+
+// Get text string from child node object selected by 'tagname'
+exports.getContentTextFromChildTag = function (obj, tagname) {
+  var retText = ''
+  for (var i = 0; i < obj.length; i++) {
+    if (obj[i].type === 'tag' && obj[i].name === tagname) {
+      retText = retText + this.getContentText(obj[i].children)
+    }
+    if (obj[i].type === 'text') {
+      retText = retText + obj[i].data.replace(/&nbsp;/g, ' ')
+    }
+  }
+
+  return retText
+}
+
+// Get child object by child nodes 'tagname' and 'searchtext'.
+exports.getChildObjectByChildTagText = function (obj, tagname, searchtext) {
+  var retText = ''
+  for (var i = obj.length - 1; i >= 0; i--) {
+    if (obj[i].type === 'tag' && obj[i].name === tagname) {
+      retText = this.getContentText(obj[i].children)
+      if (retText.search(searchtext) >= 0) {
+        return obj[i].children
+      }
+    }
+  }
 }
 
 // Get attribute 'a:href' from node object.
@@ -156,7 +184,7 @@ exports.exportTXTfile = function () {
       // check file type.
       if (filepath.search(/.txt/i) > 0) {
         tmpdata = fs.readFileSync(baseTXTpath + filepath, { encoding: 'utf8' })
-        if (tmpdata) filebuffer += tmpdata + '\r\n\r\n\r\n'
+        if (tmpdata) filebuffer += tmpdata + '\n\n\n'
       }
     })
 
@@ -235,7 +263,7 @@ exports.exportTXTfileFromDB = function (bookid) {
     const rd = db.prepare('SELECT text FROM otgdata WHERE bookid=? ORDER BY pageid ASC')
     const tmpdata = rd.all(bookid)
     tmpdata.forEach(element => {
-      filebuffer += element.text + '\r\n\r\n\r\n'
+      filebuffer += element.text + '\n\n\n'
     })
   } catch (err) {
     console.log(err)
@@ -253,5 +281,16 @@ exports.removeRecordFromDB = function (bookid) {
     rd.run(bookid)
   } catch (err) {
     console.log(err)
+  }
+}
+
+// Save content to file or database by 'saveto'
+exports.autoSave = function (link, txtContent, saveto) {
+  if (saveto === 'txt') {
+    // save to TXT file.
+    return this.savetoTXTfile(this.getTXTFilename(link), txtContent)
+  } else {
+    // save to DB.
+    return this.savetoDB(this.getBookID(link), this.getFileID(link), txtContent)
   }
 }

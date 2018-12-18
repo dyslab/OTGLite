@@ -3,7 +3,9 @@ var router = express.Router()
 var htmlparser = require('htmlparser2')
 var otgbase = require('./otg-base')
 
-// Use htmlparser2 to parse HTML code of "htmlcode" which get from website ID:240.
+// ------------------------------------------------------------------------------------------------
+// Main html parse process
+// For website id: 240
 function parseHtmlat240 (link, htmlcode, saveto) {
   // errcode = -2 means some error happened on this processing.
   var resObj = { errcode: -2 }
@@ -35,7 +37,8 @@ function parseHtmlat240 (link, htmlcode, saveto) {
       tmpChild = otgbase.getChildObjectByClass(boxcon, 'div', 'bottem2')
       var strNextLink = otgbase.getNextByTagA(link, tmpChild)
 
-      var fname
+      var fname = otgbase.autoSave(link, txtContent, saveto)
+      /*
       if (saveto === 'txt') {
         // save to TXT file.
         fname = otgbase.savetoTXTfile(otgbase.getTXTFilename(link), txtContent)
@@ -44,8 +47,67 @@ function parseHtmlat240 (link, htmlcode, saveto) {
         // fname = otgbase.getBookID(link) + '/' + otgbase.getFileID(link)
         fname = otgbase.savetoDB(otgbase.getBookID(link), otgbase.getFileID(link), txtContent)
       }
+      */
 
-      // Return txt filename, next link, errcode = 0 means successful processing.
+      // Return txt/db filename, next link, errcode = 0 means successful processing.
+      // console.log('parseHtml_240() Return Value: ' + otgbase.getTXTFilename(link) + ',' + strNextLink);
+      resObj = { filename: fname, nextlink: strNextLink, errcode: 0 }
+    }
+  })
+  var parser = new htmlparser.Parser(domHandler, { decodeEntites: true })
+  parser.parseComplete(htmlcode)
+  return resObj
+}
+
+// ------------------------------------------------------------------------------------------------
+// Main html parse process
+// For website id: QYN
+function parseHtmlatQYN (link, htmlcode, saveto) {
+  // errcode = -2 means some error happened on this processing.
+  var resObj = { errcode: -2 }
+
+  var domHandler = new htmlparser.DomHandler(function (err, dom) {
+    if (!err) {
+      //  Next chapters link's css path (refer to the same link):
+      //    html body div.main div.content p a
+      //  Title's css path:
+      //    html body div.main h1
+      //  Content's css path:
+      //    html body div.main div.content p
+      //  Check them out via Firefox Browser.
+      var tmpChild = otgbase.getChildObjectByTag(dom, 'html')
+      tmpChild = otgbase.getChildObjectByTag(tmpChild, 'body')
+      var boxcon = otgbase.getChildObjectByClass(tmpChild, 'div', 'main')
+      // get Title according to the title's css/path.
+      tmpChild = otgbase.getChildObjectByTag(boxcon, 'h1')
+      var txtContent = otgbase.getContentText(tmpChild)
+      // get Content according to the content's css/path.
+      tmpChild = otgbase.getChildObjectByClass(boxcon, 'div', 'content')
+      txtContent += otgbase.getContentTextFromChildTag(tmpChild, 'p')
+      // remove verbose text from '下一章' or '上一章' and tags like '\n','\t'...
+      var removepos = txtContent.search(/下一章/)
+      if (removepos < 0) {
+        removepos = txtContent.search(/上一章/)
+        if (removepos > 0) {
+          txtContent = txtContent.substr(0, removepos)
+        }
+      } else {
+        txtContent = txtContent.substr(0, removepos)
+      }
+      txtContent = txtContent.replace(/\t/g, '')
+      txtContent = txtContent.replace(/\n\n/g, '\n')
+      console.log(txtContent.length)
+      // Get Next chapters link
+      tmpChild = otgbase.getChildObjectByChildTagText(tmpChild, 'p', '下一章')
+      var strNextLink = otgbase.getNextByTagA(link, tmpChild)
+      // remove baseURL
+      var arrNextLink = strNextLink.split(/\//)
+      arrNextLink.splice(0, 3)
+      strNextLink = '/' + arrNextLink.join(/\//)
+
+      var fname = otgbase.autoSave(link, txtContent, saveto)
+
+      // Return txt/db filename, next link, errcode = 0 means successful processing.
       // console.log('parseHtml_240() Return Value: ' + otgbase.getTXTFilename(link) + ',' + strNextLink);
       resObj = { filename: fname, nextlink: strNextLink, errcode: 0 }
     }
@@ -60,6 +122,8 @@ function parseHtml (link, body, saveto, websiteid) {
   switch (websiteid) {
     case '240':
       return parseHtmlat240(link, body, saveto)
+    case 'qingyunian':
+      return parseHtmlatQYN(link, body, saveto)
     default:
       return { errcode: -99 }
   }
@@ -73,6 +137,7 @@ router.get('/:save_to/:website_id', function (req, res, next) {
   // Judge website whether can be parser.
   switch (req.params.website_id) {
     case '240':
+    case 'qingyunian':
       websiteok = true
       break
     default:
