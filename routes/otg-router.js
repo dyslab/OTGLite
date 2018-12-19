@@ -96,7 +96,7 @@ function parseHtmlatQYN (link, htmlcode, saveto) {
       }
       txtContent = txtContent.replace(/\t/g, '')
       txtContent = txtContent.replace(/\n\n/g, '\n')
-      console.log(txtContent.length)
+      // console.log(txtContent.length)
       // Get Next chapters link
       tmpChild = otgbase.getChildObjectByChildTagText(tmpChild, 'p', '下一章')
       var strNextLink = otgbase.getNextByTagA(link, tmpChild)
@@ -160,6 +160,7 @@ router.get('/:save_to/:website_id', function (req, res, next) {
       // Return txt filename, next link and errcode.
       var retinfo = parseHtml(req.query.link, body, req.params.save_to, req.params.website_id)
 
+      otgbase.writeCookie(res, req.query.link.split(/\//).slice(0, 3).join('/') + retinfo.nextlink) // write cookie
       otgbase.savetoLog(retinfo) // save log
       res.json(JSON.stringify(retinfo))
     }, function (err) {

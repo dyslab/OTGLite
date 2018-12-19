@@ -351,3 +351,15 @@ exports.getLogfilenames = function () {
 exports.readLogFile = function (filename) {
   return fs.readFileSync(baseLOGpath + filename, { encoding: 'utf8' })
 }
+
+// -----------------------------------------------------------------------------
+// Cookie handler
+exports.writeCookie = function (res, link) {
+  // cookies life cycle is 30 days.
+  res.cookie('nextlink', link, { maxAge: 259200000, httpOnly: true })
+}
+
+exports.readCookie = function (req) {
+  // cookies life cycle is 30 days.
+  return req.cookies === {} ? '' : req.cookies.nextlink
+}

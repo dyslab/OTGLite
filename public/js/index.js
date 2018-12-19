@@ -28,6 +28,7 @@ $(document).ready(function () {
           if (saveto === 'txt') $('#taOtgRes').val('>>> file [' + res.filename + '] saved.\r\n' + $('#taOtgRes').val())
           else $('#taOtgRes').val('>>> database record [' + res.filename + '] saved.\r\n' + $('#taOtgRes').val())
           $('#taOtgRes').val('=== ready to process next link [' + res.nextlink + '] ===\r\n' + $('#taOtgRes').val())
+          $('#txtOtg').val(getBaseLink(link) + res.nextlink)
           grabee(getBaseLink(link) + res.nextlink, saveto, counter + 1, number)
         } else {
           $('#taOtgRes').val('>>> Finish.\r\n>>> process failed. (Note: It may be the last chapter.)\r\n>>> errcode = ' + res.errcode + ', Abort!\r\n' + $('#taOtgRes').val())
