@@ -8,6 +8,7 @@ var indexRouter = require('./routes/index-router')
 var otgRouter = require('./routes/otg-router')
 var txtRouter = require('./routes/otg-txt-handler')
 var dbRouter = require('./routes/otg-db-handler')
+var logRouter = require('./routes/otg-log-handler')
 
 var app = express()
 
@@ -28,6 +29,7 @@ app.use('/', indexRouter)
 app.use('/otg', otgRouter)
 app.use('/txt', txtRouter)
 app.use('/db', dbRouter)
+app.use('/log', logRouter)
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

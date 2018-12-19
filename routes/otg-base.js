@@ -3,6 +3,7 @@ var fs = require('fs')
 var SortedArray = require('collections/sorted-array')
 const fetch = require('node-fetch')
 const baseTXTpath = './public/txt/'
+const baseLOGpath = './public/log/'
 const Database = require('better-sqlite3')
 const baseDBfullpath = './public/sqlitedb/otglite.db' // SQLite3 Database file
 
@@ -284,6 +285,7 @@ exports.removeRecordFromDB = function (bookid) {
   }
 }
 
+// -----------------------------------------------------------------------------
 // Save content to file or database by 'saveto'
 exports.autoSave = function (link, txtContent, saveto) {
   if (saveto === 'txt') {
@@ -293,4 +295,59 @@ exports.autoSave = function (link, txtContent, saveto) {
     // save to DB.
     return this.savetoDB(this.getBookID(link), this.getFileID(link), txtContent)
   }
+}
+
+// -----------------------------------------------------------------------------
+// Log file handler
+
+// Format date string like '20180203','2018-12-19', '2018/12/19'...
+function formatDate2yyyyMMdd (dateobj, speratechar) {
+  return dateobj.getFullYear().toString() + speratechar +
+         (dateobj.getMonth() >= 9 ? (dateobj.getMonth() + 1).toString() : '0' + (dateobj.getMonth() + 1).toString()) + speratechar +
+         (dateobj.getDate() > 9 ? dateobj.getDate().toString() : '0' + dateobj.getDate().toString())
+}
+
+// Format time string like '220230','18:12:30'...
+function formatDate2hhmmss (dateobj, speratechar) {
+  return (dateobj.getHours() > 9 ? dateobj.getHours().toString() : '0' + dateobj.getHours().toString()) + speratechar +
+         (dateobj.getMinutes() > 9 ? dateobj.getMinutes().toString() : '0' + dateobj.getMinutes().toString()) + speratechar +
+         (dateobj.getSeconds() > 9 ? dateobj.getSeconds().toString() : '0' + dateobj.getSeconds().toString())
+}
+
+// Save info to log file.
+exports.savetoLog = function (info) {
+  const dd = new Date()
+  fs.appendFile(baseLOGpath + formatDate2yyyyMMdd(dd, '') + '.log',
+    formatDate2yyyyMMdd(dd, '/') + ' ' + formatDate2hhmmss(dd, ':') + ', ' + JSON.stringify(info) + '\n',
+    (err) => {
+      if (err) {
+        console.log(err)
+      }
+    })
+}
+
+// Get lastest maximum 10 log filenames in the direcoty 'baseLOGpath'.
+exports.getLogfilenames = function () {
+  var dirfiles = fs.readdirSync(baseLOGpath)
+
+  if (dirfiles && dirfiles !== 'undefined') {
+    // get sorted filenames.
+    var sortedfilenames = new SortedArray(dirfiles)
+    var maxlength = (sortedfilenames.length > 10 ? 10 : sortedfilenames.length)
+    sortedfilenames.slice(sortedfilenames.length - maxlength, sortedfilenames.length)
+    return sortedfilenames.sorted((left, right) => {
+      if (left > right) {
+        return -1
+      } if (left < right) {
+        return 1
+      } else {
+        return 0
+      }
+    })
+  }
+}
+
+// Read log file by 'filename'.
+exports.readLogFile = function (filename) {
+  return fs.readFileSync(baseLOGpath + filename, { encoding: 'utf8' })
 }

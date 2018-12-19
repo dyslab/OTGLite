@@ -1,0 +1,26 @@
+extends layout
+
+block body-scripts
+  script(src="/js/loginfo.js")
+
+block body-content
+  center
+    table(width="80%")
+      tr
+        td(height="50", align="center")
+          b Welcome to Page Crawler : OTGLite Log Infomation Page
+      tr
+        td(height="80", align="right")
+          | Log File &nbsp;
+          select(id="opLogfile")
+            each fn in logfilenames
+              option(value=fn) #{fn}
+          | &nbsp;&nbsp;&nbsp;
+          button.exp(id="btnViewLog") View Log File
+      tr
+        td(height="80", align="right")
+          textarea.log(id="taLog", cols="30", rows="20", style="width: 98%", readonly)
+      tr
+        td(align="right", height="50")
+          | &nbsp;&nbsp;&nbsp;•&nbsp;&nbsp;&nbsp;
+          a(href="/") Back to Index Page

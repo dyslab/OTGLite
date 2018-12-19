@@ -61,7 +61,7 @@ function parseHtmlat240 (link, htmlcode, saveto) {
 
 // ------------------------------------------------------------------------------------------------
 // Main html parse process
-// For website id: QYN
+// For website id: qingyunian
 function parseHtmlatQYN (link, htmlcode, saveto) {
   // errcode = -2 means some error happened on this processing.
   var resObj = { errcode: -2 }
@@ -158,14 +158,23 @@ router.get('/:save_to/:website_id', function (req, res, next) {
   if (websiteok && saveok) {
     otgbase.GetHtmlCode(req.query.link, function (body) {
       // Return txt filename, next link and errcode.
-      res.json(JSON.stringify(parseHtml(req.query.link, body, req.params.save_to, req.params.website_id)))
+      var retinfo = parseHtml(req.query.link, body, req.params.save_to, req.params.website_id)
+
+      otgbase.savetoLog(retinfo) // save log
+      res.json(JSON.stringify(retinfo))
     }, function (err) {
       console.log(err)
       // Return errcode = -1 means failed processing.
-      res.json(JSON.stringify({ errcode: -1 }))
+      var err1 = { errcode: -1, errmessage: 'html page parse failed. maybe at the end as well.' }
+
+      otgbase.savetoLog(err1) // save log
+      res.json(JSON.stringify(err1))
     })
   } else {
-    res.json(JSON.stringify({ errcode: -99 }))
+    var err2 = { errcode: -99, errmessage: 'parameter invalid.' }
+
+    otgbase.savetoLog(err2) // save log
+    res.json(JSON.stringify(err2))
   }
 })
 

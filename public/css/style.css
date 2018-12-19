@@ -25,13 +25,16 @@ input, select {
   line-height: 22px;
 }
 
-textarea.response {
+textarea.log, textarea.response {
   border: 1px;
   border-style : solid;
   background-color: #FFF;
   color: #000;
-  font-size : 18px;
+  font-size : 16px;
   font-family : 'Courier New', Courier, monospace;
+}
+textarea.log {
+  font-size : 14px;
 }
 
 a.sample {
