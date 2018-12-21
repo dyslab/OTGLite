@@ -9,10 +9,10 @@ __Dev tool: VS Code + SQLite3__
 Work for following website:
 - www.xiaoshuo240.cn	example link: http://www.xiaoshuo240.cn/book/1003/860406.html
 - www.qingyunian.net	example link: http://www.qingyunian.net/54.html
-- [m.biqugex.com](m.biqugex.com)	example link: https://m.biqugex.com/book_10611/5709649.html
-- [m.booktxt.net](m.booktxt.net)	example link: https://m.booktxt.net/wapbook/1722_564289.html
-- [m.wangshu.la](m.wangshu.la)	example link: http://m.wangshu.la/book-8850/2017665.html
-- [m.xinshubao.net](m.xinshubao.net)	example link: https://k.xinshubao.net/1/1668/92947.html
+- [https://m.biqugex.com](m.biqugex.com)	example link: https://m.biqugex.com/book_10611/5709649.html
+- [https://m.booktxt.net](m.booktxt.net)	example link: https://m.booktxt.net/wapbook/1722_564289.html
+- [http://m.wangshu.la](m.wangshu.la)	example link: http://m.wangshu.la/book-8850/2017665.html
+- [https://k.xinshubao.net](m.xinshubao.net)	example link: https://k.xinshubao.net/1/1668/92947.html
 
 ***
 Project start date : 08-12-2018
