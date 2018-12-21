@@ -3,6 +3,7 @@
 Fetch web page, convert the content to the plain text, then save to the SQLite3 database or save as TXT files. Including simple txt file management, db management and log. It's a page crawler try.
 
 __Framework: Node + Express + JQuery__
+__Dev tool: VS Code__
 
 Work for following website:
 - www.xiaoshuo240.cn	example link: http://www.xiaoshuo240.cn/book/1003/860406.html
@@ -13,5 +14,5 @@ Work for following website:
 - [m.xinshubao.net](m.xinshubao.net)	example link: https://k.xinshubao.net/1/1668/92947.html
 
 ***
-- Project start date : 08-12-2018
-- Alpha version release date : 22-12-2018
+Project start date : 08-12-2018
+Alpha version release date : 22-12-2018
