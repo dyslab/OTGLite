@@ -12,11 +12,25 @@ const baseDBfullpath = './public/sqlitedb/otglite.db' // SQLite3 Database file
 // if succeed, call cb()
 // else        call errcb()
 exports.GetHtmlCode = function (link, cb, errcb) {
-  fetch(link)
-    .then(fetchres => fetchres.textConverted())
+  fetch(link, {
+    headers:
+    {
+      'Referer': link,
+      'Cahce-Control': 'max-age=0',
+      'Connection': 'keep-alive',
+      'User-Agent': 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:64.0) Gecko/20100101 Firefox/64.0'
+    }
+  }).then(fetchres => fetchres.textConverted())
     .then(body => {
       if (typeof cb === 'function') { cb(body) }
     }).catch(err => { errcb(err) })
+}
+
+// remove baseURL
+exports.removeBaseURL = function (link) {
+  var arrNextLink = link.split(/\//)
+  arrNextLink.splice(0, 3)
+  return '/' + arrNextLink.join('/')
 }
 
 // -----------------------------------------------------------------------------
@@ -30,7 +44,18 @@ exports.getChildObjectByTag = function (obj, tagname) {
   }
 }
 
-// Get Children from node object by id.
+// Get Children from node object by tagname and index no.
+exports.getChildObjectByTagIndex = function (obj, tagname, indexno) {
+  var idno = 0
+  for (var i = 0; i < obj.length; i++) {
+    if (obj[i].type === 'tag' && obj[i].name === tagname) {
+      idno++
+      if (idno === indexno) return obj[i].children
+    }
+  }
+}
+
+// Get Children from node object by id name.
 exports.getChildObjectByID = function (obj, tagname, idname) {
   for (var i = 0; i < obj.length; i++) {
     if (obj[i].type === 'tag' && obj[i].name === tagname) {
@@ -41,12 +66,25 @@ exports.getChildObjectByID = function (obj, tagname, idname) {
   }
 }
 
-// Get Children from node object by class.
-exports.getChildObjectByClass = function (obj, tagname, idname) {
+// Get Children from node object by class name.
+exports.getChildObjectByClass = function (obj, tagname, classname) {
   for (var i = 0; i < obj.length; i++) {
     if (obj[i].type === 'tag' && obj[i].name === tagname) {
-      if (domutils.getAttributeValue(obj[i], 'class') === idname) {
+      if (domutils.getAttributeValue(obj[i], 'class') === classname) {
         return obj[i].children
+      }
+    }
+  }
+}
+
+// Get Children from node object by class name and index no.
+exports.getChildObjectByClassIndex = function (obj, tagname, classname, indexno) {
+  var idno = 0
+  for (var i = 0; i < obj.length; i++) {
+    if (obj[i].type === 'tag' && obj[i].name === tagname) {
+      if (domutils.getAttributeValue(obj[i], 'class') === classname) {
+        idno++
+        if (idno === indexno) return obj[i].children
       }
     }
   }
@@ -103,7 +141,7 @@ exports.getNextByTagA = function (link, obj) {
     if (obj[i].type === 'tag' && obj[i].name === 'a') {
       retLink = domutils.getAttributeValue(obj[i], 'href')
       nNext = getD(retLink)
-      if (nNext > nThis) {
+      if (nNext >= nThis) {
         // console.log('Next Chapters Link Return Value ===>>>' + retLink)
         return retLink
       }
@@ -111,21 +149,71 @@ exports.getNextByTagA = function (link, obj) {
   }
 }
 
+// Get attribute 'a:href' from node object which index number is 'indexno'.
+exports.getNextByTagAIndex = function (link, obj, indexno) {
+  var idno = 0
+  for (var i = 0; i < obj.length; i++) {
+    if (obj[i].type === 'tag' && obj[i].name === 'a') {
+      idno++
+      if (idno === indexno) {
+        var retLink = domutils.getAttributeValue(obj[i], 'href')
+        return retLink
+      }
+    }
+  }
+}
+
+// Get attribute 'a:href' from node object which id name is 'idname'
+exports.getNextByTagAID = function (link, obj, idname) {
+  var nNext, retLink
+  var nThis = getD(link)
+  for (var i = 0; i < obj.length; i++) {
+    if (obj[i].type === 'tag' && obj[i].name === 'a') {
+      if (domutils.getAttributeValue(obj[i], 'id') === idname) {
+        retLink = domutils.getAttributeValue(obj[i], 'href')
+        nNext = getD(retLink)
+        if (nNext >= nThis) {
+          // console.log('Next Chapters Link Return Value ===>>>' + retLink)
+          return retLink
+        }
+      }
+    }
+  }
+}
+
+// Get attribute 'a:href' from node object which class name is 'classname'
+exports.getNextByTagAClass = function (link, obj, classname) {
+  var nNext, retLink
+  var nThis = getD(link)
+  for (var i = 0; i < obj.length; i++) {
+    if (obj[i].type === 'tag' && obj[i].name === 'a') {
+      if (domutils.getAttributeValue(obj[i], 'class') === classname) {
+        retLink = domutils.getAttributeValue(obj[i], 'href')
+        nNext = getD(retLink)
+        if (nNext > nThis) {
+          // console.log('Next Chapters Link Return Value ===>>>' + retLink)
+          return retLink
+        }
+      }
+    }
+  }
+}
+
 // -----------------------------------------------------------------------------
-// link string handler for website id: 240
+// link string handler for website
 // Get Digital filename ID from 'link'
 function getD (link) {
   var tmpLinkArr = link.split(/\//)
   if (tmpLinkArr.length > 0) {
     var tmpF = tmpLinkArr[tmpLinkArr.length - 1].split(/\./)
     if (tmpF.length === 2) {
-      return parseInt(tmpF[0])
+      return parseInt(parseFloat(tmpF[0].replace(/_/, '.')) * 100)
     }
   }
   return 0
 }
 
-// link string handler for website id: 240
+// link string handler for website
 // Get bookfolder ID from 'link'
 function getB (link) {
   var tmpLinkArr = link.split(/\//)
@@ -297,6 +385,18 @@ exports.autoSave = function (link, txtContent, saveto) {
   }
 }
 
+// Save content to file or database by 'saveto', manipulate link string firstly.
+exports.autoSave2 = function (link, txtContent, saveto) {
+  var slink = link.replace(/_/, '/')
+  if (saveto === 'txt') {
+    // save to TXT file.
+    return this.savetoTXTfile(this.getTXTFilename(slink), txtContent)
+  } else {
+    // save to DB.
+    return this.savetoDB(this.getBookID(slink), this.getFileID(slink), txtContent)
+  }
+}
+
 // -----------------------------------------------------------------------------
 // Log file handler
 
@@ -356,7 +456,7 @@ exports.readLogFile = function (filename) {
 // Cookie handler
 exports.writeCookie = function (res, link) {
   // cookies life cycle is 30 days.
-  res.cookie('nextlink', link, { maxAge: 259200000, httpOnly: true })
+  if (link && link !== undefined) res.cookie('nextlink', link, { maxAge: 259200000, httpOnly: true })
 }
 
 exports.readCookie = function (req) {

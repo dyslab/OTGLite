@@ -9,10 +9,18 @@ $(document).ready(function () {
 
   // Get website ID by 'link'
   function getWebsiteID (link) {
-    if (link.search(/xiaoshuo240.cn/i) >= 0) {
+    if (link.search(/www.xiaoshuo240.cn/i) >= 0) {
       return '/240'
-    } else if (link.search(/qingyunian.net/i) >= 0) {
+    } else if (link.search(/www.qingyunian.net/i) >= 0) {
       return '/qingyunian'
+    } else if (link.search(/m.biqugex.com/i) >= 0) {
+      return '/biqugex'
+    } else if (link.search(/m.booktxt.net/i) >= 0) {
+      return '/booktxt'
+    } else if (link.search(/m.wangshu.la/i) >= 0) {
+      return '/wangshu'
+    } else if (link.search(/xinshubao.net/i) >= 0) {
+      return '/xsb'
     } else {
       return ''
     }
@@ -25,22 +33,26 @@ $(document).ready(function () {
       $.get('/otg/' + saveto + getWebsiteID(link), { link: link }, function (json) {
         var res = JSON.parse(json)
         if (res.errcode === 0) {
-          if (saveto === 'txt') $('#taOtgRes').val('>>> file [' + res.filename + '] saved.\r\n' + $('#taOtgRes').val())
-          else $('#taOtgRes').val('>>> database record [' + res.filename + '] saved.\r\n' + $('#taOtgRes').val())
-          $('#taOtgRes').val('=== ready to process next link [' + res.nextlink + '] ===\r\n' + $('#taOtgRes').val())
-          $('#txtOtg').val(getBaseLink(link) + res.nextlink)
+          if (saveto === 'txt') $('#taOtgRes').val('> file [' + res.filename + '] saved.\r\n' + $('#taOtgRes').val())
+          else $('#taOtgRes').val('> database record [' + res.filename + '] saved.\r\n' + $('#taOtgRes').val())
+          $('#taOtgRes').val('* ready to process next link [' + res.nextlink + ']\r\n' + $('#taOtgRes').val())
+          if (res.nextlink && res.nextlink !== undefined) {
+            $('#txtOtg').val(getBaseLink(link) + res.nextlink)
+          }
           grabee(getBaseLink(link) + res.nextlink, saveto, counter + 1, number)
         } else {
-          $('#taOtgRes').val('>>> Finish.\r\n>>> process failed. (Note: It may be the last chapter.)\r\n>>> errcode = ' + res.errcode + ', Abort!\r\n' + $('#taOtgRes').val())
+          if (saveto === 'txt') $('#taOtgRes').val('> file [' + res.filename + '] saved.\r\n' + $('#taOtgRes').val())
+          else $('#taOtgRes').val('> database record [' + res.filename + '] saved.\r\n' + $('#taOtgRes').val())
+          $('#taOtgRes').val('> Finish.\r\n> process failed. (Note: It may be the last chapter.)\r\n> errcode = ' + res.errcode + ', Abort!\r\n' + $('#taOtgRes').val())
         }
       })
     } else {
-      $('#taOtgRes').val('>>> Finish.\r\n>>> congratulations! fetched ' + (counter - 1) + ' files successfully.\r\n' + $('#taOtgRes').val())
+      $('#taOtgRes').val('> Finish.\r\n> congratulations! fetched ' + (counter - 1) + ' files successfully.\r\n' + $('#taOtgRes').val())
     }
   }
 
   $('#btnOtg').click(function () {
-    $('#taOtgRes').val('>>> grabee go...')
+    $('#taOtgRes').val('> grabee go...')
     grabee($('#txtOtg').val(), $('#opSaveTo').val(), 1, $('#maxPages').val())
   })
 })

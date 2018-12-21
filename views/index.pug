@@ -7,8 +7,45 @@ block body-content
   center
     table(width="80%")
       tr
-        td(colspan="2", height="50", align="center")
-          b Welcome to Page Crawler : OTGLite (TXT/DB Edition) 
+        td(colspan="2")
+          table(width="100%")
+            tr
+              td(height="50", width="400", valign="top")
+                b Page Crawler : OTGLite (TXT/DB Edition) 
+              td(align="right", valign="top")
+                a(href="/txt") TXT file management
+                | &nbsp;&nbsp;&nbsp;•&nbsp;&nbsp;&nbsp;
+                a(href="/db") DB management
+                | &nbsp;&nbsp;&nbsp;•&nbsp;&nbsp;&nbsp;
+                a(href="/log") Check out Log info
+      tr
+        td(height="40", align="right")
+          | Start Page :
+        td(align="right")
+          if nextlink != undefined
+            input(type="text", id="txtOtg", value=nextlink, style="width:98%")
+          else
+            input(type="text", id="txtOtg", value="https://m.biqugex.com/book_10611/5709649.html", style="width:98%")
+      tr
+        td(colspan="2", height="40", align="right")
+          | &nbsp;&nbsp;Fetch&nbsp;
+          select(id="maxPages")
+            option(value="1" selected) 1
+            option(value="5") 5
+            option(value="10") 10
+            option(value="20") 20
+            option(value="30") 30
+            option(value="50") 50
+            option(value="100") 100
+          | &nbsp;pages, then save to &nbsp;
+          select(id="opSaveTo")
+            option(value="db") SQLite DB
+            option(value="txt") TXT file
+          | &nbsp;&nbsp;&nbsp;
+          button.go(id="btnOtg") Grabee Go!
+      tr
+        td(colspan="2", align="right")
+          textarea.response(id="taOtgRes", cols="30", rows="20", style="width: 98%", readonly)
       tr
         td(width="170", height="30", align="right", valign="top")
           | Applicable site : 
@@ -36,11 +73,6 @@ block body-content
                 a.sample(href="https://m.booktxt.net/wapbook/1722_564289.html", target="_blank") https://m.booktxt.net/wapbook/1722_564289.html
             tr
               td
-                a.sample(href="http://m.3vbooks.com/", target="_blank") m.3vbooks.com
-              td.fs90 example link: 
-                a.sample(href="http://m.3vbooks.com/html/44/44577/16394037.html", target="_blank") http://m.3vbooks.com/html/44/44577/16394037.html
-            tr
-              td
                 a.sample(href="http://m.wangshu.la/", target="_blank") m.wangshu.la
               td.fs90 example link: 
                 a.sample(href="http://m.wangshu.la/book-8850/2017665.html", target="_blank") http://m.wangshu.la/book-8850/2017665.html
@@ -49,45 +81,3 @@ block body-content
                 a.sample(href="https://k.xinshubao.net/", target="_blank") m.xinshubao.net
               td.fs90 example link: 
                 a.sample(href="https://k.xinshubao.net/1/1668/92947.html", target="_blank") https://k.xinshubao.net/1/1668/92947.html
-      tr
-        td(height="30", align="right")
-          | Save format : 
-        td
-          | txt files / sqlite db
-      tr
-        td(height="40", align="right")
-          | Start Page :
-        td(align="right")
-          if nextlink != undefined
-            input(type="text", id="txtOtg", value=nextlink, style="width:98%")
-          else
-            input(type="text", id="txtOtg", value="https://m.biqugex.com/book_10611/5709649.html", style="width:98%")
-      tr
-        td(colspan="2", height="40", align="right")
-          | &nbsp;&nbsp;Fetch&nbsp;
-          select(id="maxPages")
-            option(value="1" selected) 1
-            option(value="5") 5
-            option(value="10") 10
-            option(value="20") 20
-            option(value="30") 30
-            option(value="50") 50
-            option(value="100") 100
-          | &nbsp;Pages&nbsp;&nbsp;&nbsp;
-          | Save to &nbsp;
-          select(id="opSaveTo")
-            option(value="db") SQLite DB
-            option(value="txt") TXT file
-          | &nbsp;&nbsp;&nbsp;
-          button.go(id="btnOtg") Grabee Go!
-      tr
-        td(colspan="2", align="right")
-          textarea.response(id="taOtgRes", cols="30", rows="20", style="width: 98%", readonly)
-      tr
-        td(colspan="2", align="right")
-          | &nbsp;&nbsp;&nbsp;•&nbsp;&nbsp;&nbsp;
-          a(href="/txt") TXT file management
-          | &nbsp;&nbsp;&nbsp;•&nbsp;&nbsp;&nbsp;
-          a(href="/db") DB management
-          | &nbsp;&nbsp;&nbsp;•&nbsp;&nbsp;&nbsp;
-          a(href="/log") Check out Log info

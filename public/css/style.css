@@ -4,11 +4,16 @@ body {
   border: 0;
   outline: 0;
   font-family: Geneva, Verdana, sans-serif;
-  font-size: 18px;
-  line-height: 24px;
+  font-size: 16px;
+  line-height: 20px;
   vertical-align: baseline;
   background: #FAF4B1;
   background-image: url(/img/texture.png);
+}
+
+input, select, button {
+  font-size: 16px;
+  line-height: 20px;
 }
 
 div, dl, dt, dd
@@ -18,11 +23,6 @@ div, dl, dt, dd
   border: 0;
   outline: 0;
   vertical-align: baseline;
-}
-
-input, select {
-  font-size: 18px;
-  line-height: 22px;
 }
 
 textarea.log, textarea.response {
@@ -52,8 +52,6 @@ a.sample：hover, a:hover {
 }
 
 button.go {
-  font-size: 18px;
-  line-height: 20px;
   width: 200px;
   height: 30px;
   cursor: pointer;
@@ -66,10 +64,8 @@ button.go:hover {
 }
 
 button.exp, button.rm, button.dbexp, button.dbrm {
-  font-size: 18px;
-  line-height: 20px;
-  width: 260px;
-  height: 36px;
+  width: 240px;
+  height: 30px;
   cursor: pointer;
   color: black;
   border-left-color: rgb(231, 255, 211); 
@@ -82,7 +78,7 @@ button.rm, button.dbrm {
   color: rgb(255, 0, 0);
 }
 button.dbexp, button.dbrm {
-  width: 300px;
+  width: 280px;
 }
 button.exp:hover, button.rm:hover, button.dbexp:hover {
   color: white;
