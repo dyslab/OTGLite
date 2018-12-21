@@ -4,7 +4,7 @@ Fetch web page, convert the content to the plain text, then save to the SQLite3 
 
 __Framework: Node + Express + JQuery__
 
-__Dev tool: VS Code__
+__Dev tool: VS Code + SQLite3__
 
 Work for following website:
 - www.xiaoshuo240.cn	example link: http://www.xiaoshuo240.cn/book/1003/860406.html
