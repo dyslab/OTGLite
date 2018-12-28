@@ -12,8 +12,8 @@ var logRouter = require('./routes/otg-log-handler')
 
 var app = express()
 
-// reset the listing port to 3001
-process.env.PORT = 3001
+// reset the listing port to 8002
+process.env.PORT = 8002
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'))
