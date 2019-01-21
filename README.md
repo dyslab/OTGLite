@@ -1,4 +1,4 @@
-## OTGLite = Online Txt Grabee(short for "Grab Bee") Lite Edition.
+## OTGLite = Online Txt Grabee(short for "Grab Bee"):bee: Lite Edition.
 
 Fetch web page, convert the content to the plain text, then save to the SQLite3 database or save as TXT files. Including simple txt file management, db management and log. It's a page crawler try.
 
