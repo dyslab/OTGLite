@@ -28,14 +28,21 @@ $(document).ready(function () {
 
   // TXT version: Grab online txt.
   function grabee (link, saveto, counter, number) {
+    var webid = getWebsiteID(link)
+
+    if (webid === '') {
+      $('#taOtgRes').val('! This webpage is yet to support.\r\n' + $('#taOtgRes').val())
+      return
+    }
+
     if (counter <= number) {
       // Ajax POST method
-      $.get('/otg/' + saveto + getWebsiteID(link), { link: link }, function (json) {
+      $('#taOtgRes').val('* ready to process the link [' + link + ']\r\n' + $('#taOtgRes').val())
+      $.get('/otg/' + saveto + webid, { link: link }, function (json) {
         var res = JSON.parse(json)
         if (res.errcode === 0) {
           if (saveto === 'txt') $('#taOtgRes').val('> file [' + res.filename + '] saved.\r\n' + $('#taOtgRes').val())
           else $('#taOtgRes').val('> database record [' + res.filename + '] saved.\r\n' + $('#taOtgRes').val())
-          $('#taOtgRes').val('* ready to process next link [' + res.nextlink + ']\r\n' + $('#taOtgRes').val())
           if (res.nextlink && res.nextlink !== undefined) {
             $('#txtOtg').val(getBaseLink(link) + res.nextlink)
           }
