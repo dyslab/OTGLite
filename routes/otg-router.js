@@ -196,7 +196,7 @@ function parseHtmlatBTXT (link, htmlcode, saveto) {
       try {
         // Get Next chapters link
         tmpChild = otgbase.getChildObjectByClassIndex(boxcon, 'p', 'Readpage', 2)
-        var strNextLink = otgbase.getNextByTagAID(link, tmpChild, 'pt_next')
+        var strNextLink = otgbase.getNextByTagAID2(link, tmpChild, 'pt_next')
       } catch (err) {
         ecode = -1
       }

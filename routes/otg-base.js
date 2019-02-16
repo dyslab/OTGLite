@@ -181,6 +181,24 @@ exports.getNextByTagAID = function (link, obj, idname) {
   }
 }
 
+// Get attribute 'a:href' from node object which id name is 'idname', manipulate link string firstly.
+exports.getNextByTagAID2 = function (link, obj, idname) {
+  var nNext, retLink
+  var nThis = getD(link.replace(/_/, '/'))
+  for (var i = 0; i < obj.length; i++) {
+    if (obj[i].type === 'tag' && obj[i].name === 'a') {
+      if (domutils.getAttributeValue(obj[i], 'id') === idname) {
+        retLink = domutils.getAttributeValue(obj[i], 'href')
+        nNext = getD(retLink.replace(/_/, '/'))
+        if (nNext >= nThis) {
+          // console.log('Next Chapters Link Return Value ===>>>' + retLink)
+          return retLink
+        }
+      }
+    }
+  }
+}
+
 // Get attribute 'a:href' from node object which class name is 'classname'
 exports.getNextByTagAClass = function (link, obj, classname) {
   var nNext, retLink
