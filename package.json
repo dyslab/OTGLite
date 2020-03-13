@@ -6,7 +6,7 @@
     "start": "node ./bin/www"
   },
   "dependencies": {
-    "acorn": "^6.3.0",
+    "acorn": "^6.4.1",
     "better-sqlite3": "^5.4.3",
     "collections": "^5.1.9",
     "cookie-parser": "^1.4.4",
