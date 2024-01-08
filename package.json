@@ -12,13 +12,13 @@
     "cookie-parser": "^1.4.4",
     "debug": "^2.6.9",
     "encoding": "^0.1.12",
-    "express": "^4.17.3",
+    "express": "^4.18.2",
     "htmlparser2": "^3.10.1",
     "http-errors": "^1.6.3",
     "jquery": "^3.5.0",
     "lodash": "^4.17.21",
     "morgan": "^1.9.1",
-    "node-fetch": "^2.6.1",
+    "node-fetch": "^2.6.7",
     "pug": "^3.0.1"
   },
   "devDependencies": {
