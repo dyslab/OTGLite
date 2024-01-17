@@ -47,4 +47,6 @@ app.use(function (err, req, res, next) {
   res.render('error')
 })
 
+console.log("Web server is running at [http://localhost:%d]\n", process.env.PORT)
+
 module.exports = app
