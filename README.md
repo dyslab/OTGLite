@@ -1,22 +1,24 @@
 ## OTGLite = Online Txt Grabee(short for "Grab Bee"):bee: Lite Edition.
 
+![os badge](./public/os-badge.svg) ![app badge](./public/otglite-badge.svg)
+
 ### Intro:
 
 Fetch web page, convert the content to the plain text, then save to SQLite3 database/TXT files, including a simple txt file management, db management and logging system. This is a **page crawler**🔍 try by node.js 😊
 
-__Node.js: v14 (Newer version might be incompatible)__
+__OS: Deepin v15 ~ v20__
+
+__Node.js: v10 ~ v14 (Newer version might be incompatible)__
 
 __Main dev tools:__
 
-- __Express: v4__
+- _Express: v4_
  
-- __JQuery: v3__
+- _JQuery: v3_
 
-- __SQL library: better-sqlite3 v5__
+- _SQL library: better-sqlite3 v5_
 
 ---
-
-<br>
 
 Workable website list:
 
