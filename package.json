@@ -7,7 +7,7 @@
   },
   "dependencies": {
     "acorn": "^6.4.1",
-    "better-sqlite3": "^5.4.3",
+    "better-sqlite3": "^9.5.0",
     "collections": "^5.1.9",
     "cookie-parser": "^1.4.4",
     "debug": "^2.6.9",
