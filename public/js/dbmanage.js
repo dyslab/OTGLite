@@ -7,7 +7,7 @@ $(document).ready(function () {
 
   $('#btnExport').click(function () {
     if ($('input[name=bookid]:radio:checked').val()) {
-      window.location.href = '/db/export/' + $('input[name=bookid]:radio:checked').val()
+      window.location.href = '/db/export/' + encodeURIComponent($('input[name=bookid]:radio:checked').val())
     } else {
       window.alert('Note: No book was selected.')
     }
@@ -16,7 +16,7 @@ $(document).ready(function () {
   $('#btnRemove').click(function () {
     if ($('input[name=bookid]:radio:checked').val()) {
       if (window.confirm('Notice: This action is in risk.\r\nPlease confirm if you really want to remove all files?')) {
-        window.location.href = '/db/remove/' + $('input[name=bookid]:radio:checked').val()
+        window.location.href = '/db/remove/' + encodeURIComponent($('input[name=bookid]:radio:checked').val())
       }
     } else {
       window.alert('Note: No book was selected.')

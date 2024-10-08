@@ -1,32 +1,27 @@
 {
   "name": "otglite",
-  "version": "0.1.2",
+  "version": "0.2.0",
   "private": true,
   "scripts": {
-    "start": "node ./bin/www"
+    "start": "node ./bin/www",
+    "dev": "nodemon ./bin/www",
+    "version:minor": "npm version minor --no-git-tag-version --no-git-tag-version",
+    "version:patch": "npm version patch --no-git-tag-version --no-git-tag-version"
   },
   "dependencies": {
     "acorn": "^6.4.1",
-    "better-sqlite3": "^5.4.3",
+    "better-sqlite3": "^11.3.0",
     "collections": "^5.1.9",
     "cookie-parser": "^1.4.4",
-    "debug": "^2.6.9",
+    "debug": "^3.2.0",
     "encoding": "^0.1.12",
-    "express": "^4.18.2",
+    "express": "^4.21.0",
     "htmlparser2": "^3.10.1",
     "http-errors": "^1.6.3",
     "jquery": "^3.5.0",
     "lodash": "^4.17.21",
     "morgan": "^1.9.1",
-    "node-fetch": "^2.6.7",
+    "node-fetch": "^2.7.0",
     "pug": "^3.0.1"
-  },
-  "devDependencies": {
-    "eslint": "^5.16.0",
-    "eslint-config-standard": "^12.0.0",
-    "eslint-plugin-import": "^2.18.2",
-    "eslint-plugin-node": "^8.0.1",
-    "eslint-plugin-promise": "^4.2.1",
-    "eslint-plugin-standard": "^4.0.1"
   }
 }

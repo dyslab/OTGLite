@@ -4,7 +4,7 @@ var otgbase = require('./otg-base')
 
 /* GET log information first page. */
 router.get('/', function (req, res, next) {
-  console.log(otgbase.getLogfilenames())
+  console.log(`Log Filename: ${otgbase.getLogfilenames()}`)
   res.render('loginfo', { logfilenames: otgbase.getLogfilenames() })
 })
 

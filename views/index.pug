@@ -39,7 +39,7 @@ block body-content
             option(value="100") 100
           | &nbsp;pages, then save to &nbsp;
           select(id="opSaveTo")
-            option(value="db") SQLite DB
+            option(value="db") SQLite3 DB
             option(value="txt") TXT file
           | &nbsp;&nbsp;&nbsp;
           button.go(id="btnOtg") Grabee Go!
@@ -47,31 +47,35 @@ block body-content
         td(colspan="2", align="right")
           textarea.response(id="taOtgRes", cols="30", rows="20", style="width: 98%", readonly)
       tr
-        td(width="170", height="30", align="right", valign="top")
-          | Applicable site : 
-        td
-          table
-            tr
-              td(width="225")
-                a.sample(href="http://www.qingyunian.net", target="_blank") www.qingyunian.net
-              td.fs90 example link: 
-                a.sample(href="http://www.qingyunian.net/54.html", target="_blank") http://www.qingyunian.net/54.html
-
-            tr 
-              td(colspan="2", height="30")
-                span(style="color: red; font-size: 0.9em; font-style:italic") Below website page's format had been changed, yet to support.
-            tr
-              td
-                a.sample(href="https://m.biqugex.com/", target="_blank") m.biqugex.com 
-              td.fs90 example link: 
-                a.sample(href="https://m.biqugex.com/book_10611/5709649.html", target="_blank") https://m.biqugex.com/book_10611/5709649.html
-            tr
-              td
-                a.sample(href="https://m.booktxt.net/", target="_blank") m.booktxt.net
-              td.fs90 example link: 
-                a.sample(href="https://m.booktxt.net/wapbook/1722_564289.html", target="_blank") https://m.booktxt.net/wapbook/1722_564289.html
-            tr
-              td
-                a.sample(href="http://m.wangshu.la/", target="_blank") m.wangshu.la
-              td.fs90 example link: 
-                a.sample(href="http://m.wangshu.la/book-8850/2017665.html", target="_blank") http://m.wangshu.la/book-8850/2017665.html
+        td(colspan="2")
+          | 
+      tr
+        td(colspan="2")
+          p.otg-info-title Applicable Sites : 
+          ul
+            li
+              a.otg-website(href="http://www.qingyunian.net", target="_blank") www.qingyunian.net 
+              span.otg-link-space example link: 
+                a.otg-example(href="http://www.qingyunian.net/54.html", target="_blank") http://www.qingyunian.net/54.html
+            li
+              a.otg-website(href="https://m.xbiqugex.cc/", target="_blank") m.xbiqugex.cc 
+              span.otg-link-space example link: 
+                a.otg-example(href="https://m.xbiqugex.cc/book_10611/618843174.html", target="_blank") https://m.xbiqugex.cc/book_10611/618843174.html
+            li
+              a.otg-website(href="https://m.ddyueshu.cc/", target="_blank") m.ddyueshu.cc 
+              span.otg-link-space example link: 
+                a.otg-example(href="https://m.ddyueshu.cc/wapbook/35829602_709677954.html", target="_blank") https://m.ddyueshu.cc/wapbook/35829602_709677954.html
+            li
+              a.otg-website(href="https://www.ghost580.com/", target="_blank") ghost580.com 
+              span.otg-link-space example link: 
+                a.otg-example(href="https://www.ghost580.com/read/64258/17990253.html", target="_blank") https://www.ghost580.com/read/64258/17990253.html
+          //- p.otg-info-warning Below sites are yet to support...
+          //- ul
+      tr
+        td(colspan="2")
+          p.otg-info-title Reading Sites For Chinese Books (Recommendation) :  
+          ul
+            li
+              a.otg-website(href="https://zh.z-lib.gs/", target="_blank") Z-Library (Chinese Library)
+              span.otg-link-space example link: 
+                a.otg-example(href="https://reader4.z-library.sk/?source=5202f24101eb90ba3091cb10617c25d77de498e48532a666a8d7616974b5f3b7", target="_blank") 回到明朝当王爷（全本，在线阅读）

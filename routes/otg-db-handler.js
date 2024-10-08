@@ -15,7 +15,9 @@ router.get('/', function (req, res, next) {
 /* GET database export action. */
 router.get('/export/:bookid', function (req, res, next) {
   // Export db records to a single TXT file by bookid.
-  res.attachment(req.params['bookid'] + '.txt')
+  console.log(req.params['bookid'])
+  res.setHeader('Content-Type', 'text/plain; charset=utf-8')
+  res.attachment(encodeURIComponent(req.params['bookid']) + '.txt')
   res.send(otgbase.exportTXTfileFromDB(req.params['bookid']))
 })
 

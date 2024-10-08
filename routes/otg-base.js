@@ -7,6 +7,16 @@ const baseLOGpath = './public/log/'
 const Database = require('better-sqlite3')
 const baseDBfullpath = './public/sqlitedb/otglite.db' // SQLite3 Database file
 
+exports.getBaseLink = function (link) {
+  try {
+    const url = new URL(link)
+    return `${url.protocol}//${url.hostname}`  
+  } catch (err) {
+    console.log(err)
+    return null
+  }
+}
+
 // -----------------------------------------------------------------------------
 // Get HTML code from 'link' by node-fetch
 // if succeed, call cb()
@@ -98,7 +108,7 @@ exports.getContentText = function (obj) {
       retText = retText + '\n'
     }
     if (obj[i].type === 'text') {
-      retText = retText + obj[i].data.replace(/&nbsp;/g, ' ')
+      retText = retText + obj[i].data.replace(/&nbsp;|&emsp;/g, ' ')
     }
   }
 
@@ -166,34 +176,14 @@ exports.getNextByTagAIndex = function (link, obj, indexno) {
 // Get attribute 'a:href' from node object which id name is 'idname'
 exports.getNextByTagAID = function (link, obj, idname) {
   var nNext, retLink
-  var nThis = getD(link)
+  // var nThis = getD(link)
   for (var i = 0; i < obj.length; i++) {
     if (obj[i].type === 'tag' && obj[i].name === 'a') {
       if (domutils.getAttributeValue(obj[i], 'id') === idname) {
         retLink = domutils.getAttributeValue(obj[i], 'href')
-        nNext = getD(retLink)
-        if (nNext >= nThis) {
-          // console.log('Next Chapters Link Return Value ===>>>' + retLink)
-          return retLink
-        }
-      }
-    }
-  }
-}
-
-// Get attribute 'a:href' from node object which id name is 'idname', manipulate link string firstly.
-exports.getNextByTagAID2 = function (link, obj, idname) {
-  var nNext, retLink
-  var nThis = getD(link.replace(/_/, '/'))
-  for (var i = 0; i < obj.length; i++) {
-    if (obj[i].type === 'tag' && obj[i].name === 'a') {
-      if (domutils.getAttributeValue(obj[i], 'id') === idname) {
-        retLink = domutils.getAttributeValue(obj[i], 'href')
-        nNext = getD(retLink.replace(/_/, '/'))
-        if (nNext >= nThis) {
-          // console.log('Next Chapters Link Return Value ===>>>' + retLink)
-          return retLink
-        }
+        // nNext = getD(retLink)
+        console.log(`[function: getNextByTagAID] Next Chapters Link: ${retLink}`)
+        return retLink
       }
     }
   }
@@ -231,31 +221,29 @@ function getD (link) {
   return 0
 }
 
-// link string handler for website
-// Get bookfolder ID from 'link'
-function getB (link) {
-  var tmpLinkArr = link.split(/\//)
-  if (tmpLinkArr.length > 1) {
-    var tmpF = tmpLinkArr[tmpLinkArr.length - 2]
-    if (tmpF !== undefined) return tmpF
-  }
-  return 0
-}
-
-// Get filename ID from 'link'
-exports.getFileID = function (link) {
-  return getD(link)
-}
-
 // link string handler for website id: 240
 // Get bookfolder ID from 'link'
-exports.getBookID = function (link) {
-  return getB(link)
+exports.parseBookID = function (link) {
+  const link_array = link.replace(/_/, '/').replace(/http[s]?:\/\//i, '').split(/\//)
+  let book_id = ''
+  let page_id = ''
+  if (link_array.length === 2) return { book_id: link_array[0], page_id: link_array[1] }
+  else {
+    for (id in link_array) {
+      if (id < 3) book_id += `${link_array[id]}/`
+      else {
+        page_id += link_array[id]
+        if (id < link_array.length-1) page_id += '_'  
+      }
+    }
+    return { book_id, page_id }
+  }
 }
 
 // Get txt filename from the string 'link'.
 exports.getTXTFilename = function (link) {
-  return baseTXTpath + getB(link) + '-' + getD(link) + '.txt'
+  console.log(link)
+  return `${baseTXTpath}${encodeURIComponent(link.replace(/http[s]?:\/\//i, ''))}.txt`
 }
 
 // -----------------------------------------------------------------------------
@@ -266,7 +254,6 @@ exports.savetoTXTfile = function (filename, chunk) {
   const wstream = fs.createWriteStream(filename)
   if (wstream.write(chunk) !== false) retFlag = true
   wstream.end()
-
   if (retFlag) return filename
 }
 
@@ -334,7 +321,7 @@ exports.savetoDB = function (bookid, pageid, chunk) {
     const updateinfo = updatedb.run(chunk, bookid, pageid)
     changecount = updateinfo.changes
   }
-  return bookid + '/' + pageid + ', ' + changecount + ' record(s)'
+  return `Book ID: ${bookid}, Page ID: ${pageid}, Count: ${changecount} record(s)`
 }
 
 // Check out the database and automatically create the database file and tables if it doesn't existed.
@@ -365,7 +352,6 @@ exports.checkoutDatabase = function () {
 exports.exportTXTfileFromDB = function (bookid) {
   const db = new Database(baseDBfullpath)
   var filebuffer = ''
-
   try {
     const rd = db.prepare('SELECT text FROM otgdata WHERE bookid=? ORDER BY pageid ASC')
     const tmpdata = rd.all(bookid)
@@ -375,14 +361,12 @@ exports.exportTXTfileFromDB = function (bookid) {
   } catch (err) {
     console.log(err)
   }
-
   return filebuffer
 }
 
 // Remove records from database by 'bookid'
 exports.removeRecordFromDB = function (bookid) {
   const db = new Database(baseDBfullpath)
-
   try {
     const rd = db.prepare('DELETE FROM otgdata WHERE bookid=?')
     rd.run(bookid)
@@ -399,19 +383,8 @@ exports.autoSave = function (link, txtContent, saveto) {
     return this.savetoTXTfile(this.getTXTFilename(link), txtContent)
   } else {
     // save to DB.
-    return this.savetoDB(this.getBookID(link), this.getFileID(link), txtContent)
-  }
-}
-
-// Save content to file or database by 'saveto', manipulate link string firstly.
-exports.autoSave2 = function (link, txtContent, saveto) {
-  var slink = link.replace(/_/, '/')
-  if (saveto === 'txt') {
-    // save to TXT file.
-    return this.savetoTXTfile(this.getTXTFilename(slink), txtContent)
-  } else {
-    // save to DB.
-    return this.savetoDB(this.getBookID(slink), this.getFileID(slink), txtContent)
+    const { book_id, page_id } = this.parseBookID(link)
+    return this.savetoDB(book_id, page_id, txtContent)
   }
 }
 
@@ -479,5 +452,5 @@ exports.writeCookie = function (res, link) {
 
 exports.readCookie = function (req) {
   // cookies life cycle is 30 days.
-  return req.cookies === {} ? '' : req.cookies.nextlink
+  return req.cookies.nextlink === undefined ? '' : req.cookies.nextlink
 }

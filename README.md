@@ -1,47 +1,59 @@
-## OTGLite = Online Txt Grabee(short for "Grab Bee"):bee: Lite Edition.
+# OTGLite = Online Txt Grabee(short for "Grab Bee"):bee: Lite Edition
 
-![os badge](./public/os-badge.svg) ![app badge](./public/otglite-badge.svg)
+[![os version badge](./public/img/deepin-os-v23.svg)](https://www.deepin.org/) &nbsp; [![node.js version badge](./public/img/node.js-v20.svg)](https://nodejs.org/)
 
-### Intro:
+## Intro
 
-Fetch web page, convert the content to the plain text, then save to SQLite3 database/TXT files, including a simple txt file management, db management and logging system. This is a **page crawler**🔍 try by node.js 😊
+Fetch content from web page, then save to SQLite3 database or save as TXT file(s), including a simple txt file management, db management and logging file. All of all, it is a **Page Crawler** 🔍 powered by node.js. 😊
 
-__OS: Deepin v15 ~ v20__
+- `OS`: **Deepin OS v15 ~ v23**
 
-__Node.js: v10 ~ v14 (Newer version might be incompatible)__
+- `Node.js`: **v14 (lts/fermium) ~ v20 (lts/iron)** with `nvm` [Node Version Manager](https://github.com/nvm-sh/nvm)
 
-_Main dev tools:_
+> PS: Newer version of Node,js might be incompatible.
 
-- _Express: v4_
- 
-- _JQuery: v3_
+- `Express v4`
 
-- _SQL library: better-sqlite3 v5_
+- `JQuery v3`
 
----
+- SQLite3 management package: `better-sqlite3 v5 (Upgraded to v11)`
 
-Workable website list:
+### Run, Dev and Node.js Version Mangement
 
-- [www.qingyunian.net](www.qingyunian.net)	example link: http://www.qingyunian.net/54.html
+#### Run and Dev
 
-Pages format of below websites had been changed, yet to support. 
+```shell
+npm start          # Start web server with node
 
-- [m.biqugex.com](https://m.biqugex.com)	example link: https://m.biqugex.com/book_10611/5709649.html
-- [m.booktxt.net](https://m.booktxt.net)	example link: https://m.booktxt.net/wapbook/1722_564289.html
-- [m.wangshu.la](http://m.wangshu.la)	example link: http://m.wangshu.la/book-8850/2017665.html
+nvm run dev        # Start web server with nodemon, for development
+```
 
-### Important notes:
+#### Install Nodemon Globally
 
-In case you want to install, rebuild or run this application on another computer, you are supposed to use `nvm` to maintain a suitable node.js version to install, rebuild or run it.  On my case, I am failed to rebuild the application on node.js v21 framework, and I rebuild it and run the web service successfully when I use `nvm` to change to node.js v14 framework though.
+```shell
+npm install -g nodemon
+```
 
-A good idea is to use an older version node.js (such as v14, v13, v12...)  to use this kind of elder applications. Too many changes have occured on newer version of node.js, that makes it doesn't fit for these 'elders'. 😉 
+#### Node.js Version Mangement (Simple usgae of 'nvm')
 
-`nvm`: Node Version Manager. check it out on [https://github.com/nvm-sh/nvm](https://github.com/nvm-sh/nvm)
+```shell
+nvm install 14          # Install node v14.21.3 (lts/fermium)
 
----
+nvm use 14              # Change to node version v14.x.x
 
-### Change Log:
+nvm use node            # Change to default node version
 
-- Alpha version release date : 22 Dec 2018
+nvm ls                  # List installed (and current using) node versions on your personal computer
+```
 
-- Project start date : 08 Dec 2018
+#### Tested on Node.js v20.18.0 (lts/iron)
+
+[![nvm ls](./public/img/Screen-2024-10-08_00-21-09.png)](https://github.com/nvm-sh/nvm)
+
+## Milestone
+
+- Lastest Modified Date: 9 Oct 2024
+
+- Release Date : 22 Dec 2018
+
+- Project Start Date : 08 Dec 2018

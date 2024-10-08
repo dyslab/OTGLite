@@ -37,17 +37,30 @@ textarea.log {
   font-size : 14px;
 }
 
-a.sample {
+a.otg-website {
   color: rgb(100, 100, 100);
+  font-weight: bold;
+  font-style: italic;
+  text-decoration:none;
+  text-shadow:2px 2px 2px #FFF;
+}
+a.otg-example {
+  color: rgb(100, 100, 100);
+  font-style: italic;
   text-decoration:none;
   text-shadow:1px 1px 1px #FFF;
 }
+
+span.otg-link-space {
+  margin: 0 2em;
+}
+
 a {
   color: #493997;
   text-decoration:none;
   text-shadow:1px 1px 1px rgb(98, 177, 252);
 }
-a.sample：hover, a:hover {
+a:hover {
   color: #dd6853;
 }
 
@@ -89,9 +102,15 @@ button.rm:hover, button.dbrm:hover {
   background-color: rgb(83, 143, 75);
 }
 
-table, td, tbody {
-  margin: 0px;
-  padding: 0px;
+td {
+  margin: 0;
+  padding: 0;
+}
+
+li {
+  margin: 0.5em 2em;
+  padding: 0;
+  list-style-type: disc;
 }
 
 table.bls, td.bls {
@@ -112,6 +131,15 @@ tr.trb:hover {
   background: #FAE4A1
 }
 
-.fs90 {
-  font-size: 90%;
+.otg-info-title {
+  font-size: 1.1em;
+  color: rgb(30, 30, 30);
+  margin: 0.5em 2em;
+}
+
+.otg-info-warning {
+  font-size: 0.9em;
+  color: rgb(255, 70, 70);
+  font-style: italic;
+  margin: 0 4em;
 }

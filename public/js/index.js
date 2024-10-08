@@ -3,24 +3,25 @@
 $(document).ready(function () {
   // Get the base link of "http://...".
   function getBaseLink (link) {
-    var tmpLinkArr = link.split(/\//)
-    return tmpLinkArr.slice(0, 3).join('/')
+    try {
+      const url = new URL(link)
+      return `${url.protocol}//${url.hostname}`  
+    } catch (err) {
+      console.log(err)
+      return null
+    }
   }
 
   // Get website ID by 'link'
   function getWebsiteID (link) {
-    if (link.search(/www.xiaoshuo240.cn/i) >= 0) {
-      return '/240'
-    } else if (link.search(/www.qingyunian.net/i) >= 0) {
+    if (link.search(/www.qingyunian.net/i) >= 0) {
       return '/qingyunian'
-    } else if (link.search(/m.biqugex.com/i) >= 0) {
+    } else if (link.search(/m.biqugex.com/i) >= 0 
+    || link.search(/m.xbiqugex.cc/i) >= 0 
+    || link.search(/m.ddyueshu.cc/i) >= 0) {
       return '/biqugex'
-    } else if (link.search(/m.booktxt.net/i) >= 0) {
-      return '/booktxt'
-    } else if (link.search(/m.wangshu.la/i) >= 0) {
-      return '/wangshu'
-    } else if (link.search(/xinshubao.net/i) >= 0) {
-      return '/xsb'
+    } else if (link.search(/ghost580.com/i) >= 0) {
+      return '/ghost580'
     } else {
       return ''
     }
@@ -44,9 +45,13 @@ $(document).ready(function () {
           if (saveto === 'txt') $('#taOtgRes').val('> file [' + res.filename + '] saved.\r\n' + $('#taOtgRes').val())
           else $('#taOtgRes').val('> database record [' + res.filename + '] saved.\r\n' + $('#taOtgRes').val())
           if (res.nextlink && res.nextlink !== undefined) {
-            $('#txtOtg').val(getBaseLink(link) + res.nextlink)
+            let next_link = res.nextlink
+            if (res.nextlink.match(/^http[s]?:\/\//) === null) {
+              next_link = getBaseLink(link) + next_link
+            } 
+            $('#txtOtg').val(next_link)
+            grabee(next_link, saveto, counter + 1, number)
           }
-          grabee(getBaseLink(link) + res.nextlink, saveto, counter + 1, number)
         } else {
           if (saveto === 'txt') $('#taOtgRes').val('> file [' + res.filename + '] saved.\r\n' + $('#taOtgRes').val())
           else $('#taOtgRes').val('> database record [' + res.filename + '] saved.\r\n' + $('#taOtgRes').val())
