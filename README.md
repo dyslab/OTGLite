@@ -6,26 +6,34 @@
 
 Fetch content from web page, then save to SQLite3 database or save as TXT file(s), including a simple txt file management, db management and logging file. All of all, it is a **Page Crawler** 🔍 powered by node.js. 😊
 
-- `OS`: **Deepin OS v15 ~ v23**
+- `OS`: **Deepin OS v15 ~ v23** / **Windows 11**
 
-- `Node.js`: **v14 (lts/fermium) ~ v20 (lts/iron)** with `nvm` [Node Version Manager](https://github.com/nvm-sh/nvm)
+- `Node.js`: **v14 ~ v22** with [Node Version Manager](https://github.com/nvm-sh/nvm)
 
 > PS: Newer version of Node,js might be incompatible.
 
-- `Express v4`
+- `Express v5`
 
 - `JQuery v3`
 
 - SQLite3 management package: `better-sqlite3 v5 (Upgraded to v11)`
 
-### Run, Dev and Node.js Version Mangement
+### Install, Run, Dev and Node.js Version Mangement
+
+#### Install Dependencies
+
+```shell
+npm install
+```
 
 #### Run and Dev
 
 ```shell
 npm start          # Start web server with node
 
-nvm run dev        # Start web server with nodemon, for development
+# or,
+
+npm run dev        # Start web server with nodemon, for development
 ```
 
 #### Install Nodemon Globally
@@ -34,7 +42,7 @@ nvm run dev        # Start web server with nodemon, for development
 npm install -g nodemon
 ```
 
-#### Node.js Version Mangement (Simple usgae of 'nvm')
+#### Node.js Version Mangement (Simple usgae of `nvm`)
 
 ```shell
 nvm install 14          # Install node v14.21.3 (lts/fermium)
@@ -52,7 +60,7 @@ nvm ls                  # List installed (and current using) node versions on yo
 
 ## Milestone
 
-- Lastest Modified Date: 9 Oct 2024
+- Lastest Modified Date: 31 Oct 2025
 
 - Release Date : 22 Dec 2018
 
